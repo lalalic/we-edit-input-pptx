@@ -1,0 +1,56 @@
+{
+  "name": "we-edit-input-pptx",
+  "version": "0.0.1",
+  "description": "we-edit input type pptx",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "webpack-dev-server --env=dev",
+    "build": "webpack --env=api"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lalalic/we-edit-input-pptx.git"
+  },
+  "keywords": [
+    "we-edit",
+    "input",
+    "type",
+    "pptx",
+    "extension",
+    "plugin"
+  ],
+  "author": "lalalic@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lalalic/we-edit-input-pptx/issues"
+  },
+  "homepage": "https://github.com/lalalic/we-edit-input-pptx#readme",
+  "dependencies": {
+    "docx4js": "../docx4js",
+    "lodash.defaultsdeep": "^4.6.0"
+  },
+  "peerDependencies": {
+    "we-edit": "../we-edit/packages/we-edit"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-module-resolver": "^2.5.0",
+    "babel-plugin-transform-class-properties": "^6.6.0",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.5.0",
+    "brfs": "^1.4.3",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.7.1",
+    "transform-loader": "^0.2.4",
+    "we-edit": "../we-edit/packages/we-edit",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
