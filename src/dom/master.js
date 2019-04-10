@@ -5,7 +5,7 @@ export default ({Page})=>class extends Component{
     static displayName="master"
     static childContextTypes={
         txStyles:PropTypes.object,
-        placeholders:PropTypes.object,
+        placeholders:PropTypes.arrayOf(PropTypes.element)
     }
 
     getChildContext(){
@@ -13,10 +13,10 @@ export default ({Page})=>class extends Component{
             txStyles:this.props.txStyles,
             placeholders:this.typedChildren().content.reduce((phs, a)=>{
                 if(a.props.placeholder){
-                    phs[a.props.placeholder]=a
+                    phs.push(a)
                 }
                 return phs
-            },{})
+            },[])
         }
     }
 

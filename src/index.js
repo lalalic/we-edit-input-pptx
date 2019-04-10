@@ -44,12 +44,11 @@ export default class extends DocxInput{
             case "p":
                 return createElement(Dom.Paragraph,props,children,node)
             case "r":
-                return createElement(Dom.Container,props,children,node)
+                return createElement(Dom.Run,props,children,node)
             case "t":
                 return createElement(Dom.Text,{},node.children[0].data,node)
-
             case "shape":
-            return createElement(Dom.Shape,props,children,node)
+                return createElement(Dom.Shape,props,children,node)
             case "picture":
             case "graphic":
             case "chart":

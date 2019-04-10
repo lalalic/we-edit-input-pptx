@@ -5,6 +5,7 @@ import Slide from "./slide"
 import Paragraph from "./paragraph"
 import Text from "./text"
 import Shape from "./shape"
+import Run from "./run"
 
 export default {
     Document,
@@ -12,6 +13,7 @@ export default {
     Layout,
     Slide,
     Paragraph,
+    Run,
     Text,
     Shape,
 }

@@ -13,15 +13,11 @@ export default ({Document,Section,Frame})=>{
         static displayName="document"
 
         static childContextTypes={
-            defaultTextStyle:PropTypes.object,
-            mergePlaceholders: PropTypes.func,
+            defaultTextStyle:PropTypes.object
         }
         getChildContext(){
             return {
-                defaultTextStyle:this.props.defaultTextStyle,
-                mergePlaceholders(me, you){
-                    return me
-                }
+                defaultTextStyle:this.props.defaultTextStyle
             }
         }
 
