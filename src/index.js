@@ -50,6 +50,8 @@ export default class extends DocxInput{
             case "shape":
                 return createElement(Dom.Shape,props,children,node)
             case "picture":
+            debugger
+                return createElement(Dom.Image,props,null,node)
             case "graphic":
             case "chart":
             case "diagram":
