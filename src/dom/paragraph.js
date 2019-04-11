@@ -29,10 +29,10 @@ export default ({Paragraph})=>class extends Component{
 
     getStyle=memoize((direct, context)=>{
         const {defaultTextStyle, txStyles, placeholder={}}=context
-        const {lvl=1, lvlpPr=`lvl${lvl}pPr`}=direct
+        const {lvl=0, lvlpPr=`lvl${lvl+1}pPr`}=direct
         const styles=[direct,placeholder[lvlpPr]]
 
-        const txStyle=txStyles[`${placeholder.type||'body'}`]||txStyles.otherStyle
+        const txStyle=txStyles[`${placeholder.type||'body'}Style`]||txStyles.otherStyle
         if(txStyle){
             styles.push(txStyle[lvlpPr])
             styles.push(txStyle.defPPr)
@@ -48,8 +48,28 @@ export default ({Paragraph})=>class extends Component{
 
     render(){
         const {style:_1, ...props}=this.props
-        const style=toParagraphStyle(this.getStyle(_1, this.context))
         const defaultStyle=toTextStyle(this.getDefaultStyle())
-        return <Paragraph {...props} defaultStyle={defaultStyle} {...style}/>
+        var {numbering, ...pstyle}=toParagraphStyle(this.getStyle(_1, this.context))
+        if(numbering){
+            const size=toTextStyle(defaults(this.getChildContext().style,this.props.defaultStyle)).size
+            if(numbering.sizePct)
+                numbering.style.size=size*sizePct
+
+            if(!numbering.style.size)
+                numbering.style.size=size
+        }
+        return <Paragraph {...props} defaultStyle={defaultStyle} {...pstyle} numbering={numbering} End=""/>
     }
+
+    static get Paragraph(){
+        return memoize(()=>class extends Paragraph{
+            static End=class extends Paragraph.End{
+                static defaultProps={
+                    ...Paragraph.End.defaultProps,
+                    End:""
+                }
+            }
+        })()
+    }
+
 }

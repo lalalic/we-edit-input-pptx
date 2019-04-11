@@ -44,7 +44,7 @@ export default ({Frame})=>class extends Component{
     render(){
         const {textStyle:_1, children, id, changed,...props}=this.props
         const {textStyle, shapeStyle}=this.getTextAndShapeStyle(this.props, this.context)
-        const {size,vertAlign, }=toShapeStyle({...textStyle, ...shapeStyle})
-        return <Frame {...{children,id,changed, vertAlign}} {...size}/>
+        const {vertAlign, ...shapePr}=toShapeStyle({...textStyle, ...shapeStyle})
+        return <Frame {...{children,id,changed, vertAlign}} {...shapePr}/>
     }
 }

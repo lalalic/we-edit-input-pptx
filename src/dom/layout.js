@@ -23,10 +23,10 @@ export default ({})=>class extends Component{
         const content=React.Children.toArray(this.props.children)
         return content.reduce((phs, a)=>{
             if(a.props.placeholder){
-                const {placeholder:{type,idx}}=a.props
+                const {props:{placeholder:{type,idx}}}=a
                 const phMaster=placeholders.find(({props:{placeholder:b}})=>b.type==type && b.idx==idx)
                 if(phMaster){
-                    phs.push(React.cloneElement(a),defaults({},a.props,phMaster.props))
+                    phs.push(React.cloneElement(a,defaults({},a.props,phMaster.props)))
                 }else{
                     phs.push(a)
                 }
