@@ -6,6 +6,10 @@ import Paragraph from "./paragraph"
 import Text from "./text"
 import Shape from "./shape"
 import Run from "./run"
+import Table from "./table"
+import Row from "./row"
+import Cell from "./cell"
+import TextBody from "./text-body"
 
 export default {
     Document,
@@ -16,4 +20,8 @@ export default {
     Run,
     Text,
     Shape,
+    Table,
+    Row,
+    Cell,
+    TextBody,
 }

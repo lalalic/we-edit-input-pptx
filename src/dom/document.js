@@ -13,11 +13,13 @@ export default ({Document,Section,Frame})=>{
         static displayName="document"
 
         static childContextTypes={
-            defaultTextStyle:PropTypes.object
+            defaultTextStyle:PropTypes.object,
+            tableStyles: PropTypes.object,
         }
         getChildContext(){
             return {
-                defaultTextStyle:this.props.defaultTextStyle
+                defaultTextStyle:this.props.defaultTextStyle,
+                tableStyles: this.props.tableStyles
             }
         }
 

@@ -18,7 +18,7 @@ export default class extends DocxInput{
     }
 
     render(createElement, Dom){
-        var fonts, defaultStyle
+        var fonts, tableStyles={}
         const buildFactory=createElement=>(type,{node,type:_1,part,key:_2, ...props},children)=>{
 			children=children.reduce((merged,a)=>{
 				if(Array.isArray(a))
@@ -31,7 +31,7 @@ export default class extends DocxInput{
 			switch(type){
             case "document":
                 node.id="root"
-                return createElement(Dom.Document,{...props},children,node)
+                return createElement(Dom.Document,{...props, tableStyles},children,node)
             case "slideMaster":
                 node.id=part
                 return createElement(Dom.Master,{...props,rid:node.attribs["r:id"]},children,node)
@@ -48,16 +48,22 @@ export default class extends DocxInput{
             case "t":
                 return createElement(Dom.Text,{},node.children[0].data,node)
             case "shape":
-                return createElement(Dom.Shape,props,children,node)
             case "picture":
-            debugger
-                return createElement(Dom.Image,props,null,node)
+                return createElement(Dom.Shape,props,type=="picture" ? null : children,node)
             case "graphic":
             case "chart":
             case "diagram":
                 return createElement(Dom.Container,props,children,node)
-            case "table":
+            case "txBody":
+                return createElement(Dom.TextBody,props,children,node)
+            case "tbl":
                 return createElement(Dom.Table,props,children,node)
+            case "tr":
+                return createElement(Dom.Row,props,children,node)
+            case "tc":
+                return createElement(Dom.Cell,{...props,cnf:new Set()},children,node)
+            case "tblStyle":
+                tableStyles[props.styleId]=props
             default:
                 if(children.length==1)
                     return children[0]

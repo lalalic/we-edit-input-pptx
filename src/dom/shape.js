@@ -5,7 +5,7 @@ import defaults from "lodash.defaultsdeep"
 import {toShapeStyle} from "./style"
 
 
-export default ({Frame})=>class extends Component{
+export default ({Frame,Shape})=>class extends Component{
     static displayName="shape"
 
     static contextTypes={
@@ -42,9 +42,17 @@ export default ({Frame})=>class extends Component{
     })
 
     render(){
-        const {textStyle:_1, children, id, changed,...props}=this.props
+        const {textStyle:_1,children, id, ...props}=this.props
         const {textStyle, shapeStyle}=this.getTextAndShapeStyle(this.props, this.context)
-        const {vertAlign, ...shapePr}=toShapeStyle({...textStyle, ...shapeStyle})
-        return <Frame {...{children,id,changed, vertAlign}} {...shapePr}/>
+        const shapePr=toShapeStyle({...textStyle, ...shapeStyle})
+        return (
+            <Shape {...props} {...shapePr} id={id}>
+                {children && !!React.Children.toArray(children).length && (
+                    <Frame children={children} id={`${id}-content`}
+                        width={100} height={100} //will be replaced in shape render
+                    />
+                )}
+            </Shape>
+        )
     }
 }

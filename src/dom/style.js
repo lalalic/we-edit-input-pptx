@@ -12,8 +12,12 @@ export function toShapeStyle(){
     return new ShapeStyle(...arguments).flat()
 }
 
+export function toCellStyle(){
+    return new CellStyle(...arguments).flat()
+}
+
 class Style{
-    constructor(style,keys){
+    constructor(style,keys,...directs){
         this.flat=memoize(()=>Object.keys(style)
             .reduce((props, k)=>{
                 if(k in this){
@@ -22,6 +26,8 @@ class Style{
                         const name=keys[k]||k
                         props[name]=v
                     }
+                }else if(directs.includes(k)){
+                    props[k]=style[k]
                 }
                 return props
             },{}))
@@ -34,12 +40,14 @@ class Style{
 
 class TextStyle extends Style{
     constructor({latin, ea, cs, ...style}){
-        super({...style, fonts:{latin, ea, cs}},{sz:"size",b:"bold",i:"italic",solidFill:"color"})
+        super({...style, fonts:{latin, ea, cs}},
+            {sz:"size",b:"bold",i:"italic",solidFill:"color"},
+            "solidFill"
+        )
     }
     sz=v=>parseInt(v)/100
     b=v=>!!v
     i=v=>!!v
-    solidFill=v=>v
     fonts=({latin, ea, cs})=>[latin,ea,cs].filter(a=>a).join(",")||undefined
 }
 
@@ -83,14 +91,26 @@ class ShapeStyle extends Style{
         super(style,{
             anchor:"vertAlign",
 
-        })
+        },"geometry","solidFill")
     }
 
     anchor(v){
         return {b:"bottom",ctr:"middle",t:"top", dist:"distributed",just:"justified"}[v]
     }
 
-    xfrm(a, props){
-        Object.assign(props, a)
+    xfrm=(a, props)=>Object.assign(props, a)
+
+    blipFill=({blip, ...props})=>({...blip, ...props})
+}
+
+class CellStyle extends Style{
+    constructor({tcBdr={}, ...others}){
+        super({...tcBdr, ...others},{fill:"background"})
+        const edge=({w:sz=0,cmpd,solidFill:color})=>({sz,color})
+        this.bottom=this.top=this.right=this.left=edge
+    }
+
+    fill({solidFill}){
+        //return solidFill
     }
 }
