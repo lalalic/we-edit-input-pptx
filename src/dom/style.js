@@ -18,17 +18,18 @@ export function toCellStyle(){
 
 class Style{
     constructor(style,keys,...directs){
+        const drFn=k=>k
         this.flat=memoize(()=>Object.keys(style)
             .reduce((props, k)=>{
-                if(k in this){
-                    let v=this[k](style[k],props, style)
+                const fn=this[k]||(directs.includes(k)&&drFn)
+                if(fn){
+                    let v=fn.bind(this)(style[k],props, style)
                     if(v!=undefined && v!=props){
                         const name=keys[k]||k
                         props[name]=v
                     }
-                }else if(directs.includes(k)){
-                    props[k]=style[k]
                 }
+
                 return props
             },{}))
     }
@@ -111,6 +112,6 @@ class CellStyle extends Style{
     }
 
     fill({solidFill}){
-        //return solidFill
+        return solidFill
     }
 }

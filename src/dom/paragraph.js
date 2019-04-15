@@ -10,7 +10,8 @@ export default ({Paragraph})=>class extends Component{
     static contextTypes={
         defaultTextStyle:PropTypes.object,
         txStyles:PropTypes.object,
-        placeholder:PropTypes.object
+        placeholder:PropTypes.object,
+        style:PropTypes.object,
     }
 
     static childContextTypes={
@@ -28,9 +29,9 @@ export default ({Paragraph})=>class extends Component{
     }
 
     getStyle=memoize((direct, context)=>{
-        const {defaultTextStyle, txStyles, placeholder={}}=context
+        const {defaultTextStyle, txStyles, placeholder={},style={},containerStyle={defRPr:style}}=context
         const {lvl=0, lvlpPr=`lvl${lvl+1}pPr`}=direct
-        const styles=[direct,placeholder[lvlpPr]]
+        const styles=[direct,containerStyle, placeholder[lvlpPr]]
 
         const txStyle=txStyles[`${placeholder.type||'body'}Style`]||txStyles.otherStyle
         if(txStyle){
@@ -60,16 +61,4 @@ export default ({Paragraph})=>class extends Component{
         }
         return <Paragraph {...props} defaultStyle={defaultStyle} {...pstyle} numbering={numbering} End=""/>
     }
-
-    static get Paragraph(){
-        return memoize(()=>class extends Paragraph{
-            static End=class extends Paragraph.End{
-                static defaultProps={
-                    ...Paragraph.End.defaultProps,
-                    End:""
-                }
-            }
-        })()
-    }
-
 }

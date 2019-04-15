@@ -19,7 +19,7 @@ export default ({Container})=>class extends Component{
     }
 
     getChildContext(){
-        return {
+		return {
             style:this.style(this.props.style, this.context.style)
         }
     }

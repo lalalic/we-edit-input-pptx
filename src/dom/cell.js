@@ -9,7 +9,22 @@ const PRIORIZED='lastCol,firstCol,lastRow,firstRow,band2H,band1H,band2V,band1V,w
 export default ({Cell})=>class extends Component{
 	static displayName="cell"
 	static contextTypes={
-		tableStyle:PropTypes.object
+		tableStyle:PropTypes.object,
+		style:PropTypes.object,
+	}
+
+	static childContextTypes={
+		style: PropTypes.object
+	}
+
+	getChildContext(){
+		return {
+			style:this.getTextStyle()
+		}
+	}
+
+	getTextStyle(){
+		return this.getStyle().tcTxStyle
 	}
 
 	getStyle(){
